@@ -6,7 +6,7 @@
 /*   By: dabouab <dabouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:34:28 by dabouab           #+#    #+#             */
-/*   Updated: 2024/12/20 13:44:25 by dabouab          ###   ########.fr       */
+/*   Updated: 2024/12/20 14:18:20 by dabouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void create_server(t_server *server)
     // On recupere les information concernant le protocole voulu
     proto =  getprotobyname("tcp");
     if (!proto)
-        notif("Proto failed", std::strerror(errno));
+        notif("Proto failed", true);
     // On ouvre la socket de communication
     server->sock_fd = socket(PF_INET, SOCK_STREAM, proto->p_proto); 
     sin.sin_family = AF_INET; // precise IPv4 Internet protocols
@@ -29,17 +29,17 @@ void create_server(t_server *server)
     sin.sin_addr.s_addr = htonl(INADDR_ANY); 
     // On lie la socket a l'adresse
     if (bind(server->sock_fd, (const struct sockaddr *)&sin, sizeof(sin)) < 0)
-        notif("bind failed", std::strerror(errno));
+        notif("bind failed", true);
     // Precise le nombre de connexion simultanees acceptess par la socket
     listen(server->sock_fd, 42);
-	notif("Server on", NULL);
+	notif("Server on", false);
 }
 
 int	main(int ac, char **av)
 {
     t_server	server;
     t_client	client;
-	int			nb_read;
+	int			nb_read = 1;
 	char		buf[1024];
 
 	// valeurs par defaut
@@ -49,12 +49,17 @@ int	main(int ac, char **av)
 	
     create_server(&server);
 	// On accept la connection client et renvoie un fd de la socket connectee au client
-    client.fd = accept(server.port, (struct sockaddr*)&client.sin, &client.slen);
+    client.fd = accept(server.sock_fd, (struct sockaddr*)&client.sin, &client.slen);
+	if (client.fd < 0)
+		notif("Client connection failed", true);
 	// On lit ce que le client nous envoie
-	nb_read = read(client.fd, buf, 1023);
-	buf[nb_read] = '\0';
-	if (nb_read > 0)
-		std::cout << buf << std::endl;
+	while (nb_read)
+	{
+		nb_read = read(client.fd, buf, 1023);
+		buf[nb_read] = '\0';
+		if (nb_read > 0)
+			std::cout << buf << std::endl;
+	}
 	// On stoppe la connection avec le client
 	close(client.fd);
 	// on ferme le serveur

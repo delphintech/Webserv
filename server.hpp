@@ -6,7 +6,7 @@
 /*   By: dabouab <dabouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:55:21 by dabouab           #+#    #+#             */
-/*   Updated: 2024/12/20 13:43:31 by dabouab          ###   ########.fr       */
+/*   Updated: 2024/12/20 14:16:25 by dabouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ typedef struct	s_client
     socklen_t			slen;
 }	t_client;
 
-void	notif(std::string msg, char *error);
+void	notif(std::string msg, bool err);
 
 #endif
