@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.hpp                                         :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabouab <dabouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/20 11:55:21 by dabouab           #+#    #+#             */
-/*   Updated: 2024/12/20 14:16:25 by dabouab          ###   ########.fr       */
+/*   Created: 2024/12/20 14:32:05 by dabouab           #+#    #+#             */
+/*   Updated: 2024/12/20 14:49:49 by dabouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_HPP
-# define SERVER_HPP
+#ifndef UTILS_HPP
+# define UTILS_HPP
 
 #include <iostream>
 #include <cerrno>
@@ -26,19 +26,6 @@
 
 #define COLOR(nb) "\e["#nb"m"
 
-typedef struct	s_server
-{
-	int		port;       // port d'ecoute du serveur
-	int		sock_fd;    // fd de la socket de ommunication
-}   t_server;
-
-typedef struct	s_client
-{
-    int					fd;
-    struct sockaddr_in	sin;
-    socklen_t			slen;
-}	t_client;
-
-void	notif(std::string msg, bool err);
+bool	notif(std::string msg, bool ok);
 
 #endif
