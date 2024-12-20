@@ -6,7 +6,7 @@
 /*   By: dabouab <dabouab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:55:21 by dabouab           #+#    #+#             */
-/*   Updated: 2024/12/20 14:59:48 by dabouab          ###   ########.fr       */
+/*   Updated: 2024/12/20 15:56:59 by dabouab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ public:
 
 	bool	start();
 	void	stop();
+	int		Send();
 	
 	int		getSock_fd();
 };
